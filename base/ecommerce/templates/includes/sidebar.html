@@ -1,0 +1,66 @@
+{% load static %}
+<!-- Left Sidebar -->
+<aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white shadow-lg transform sidebar-transition md:transform-none sidebar-closed md:sidebar-closed-none z-30 mt-20 md:mt-0 overflow-y-auto custom-scrollbar">
+    <nav class="p-4 space-y-2">
+        <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Main Menu</h2>
+
+        <a href="{% url 'home' %}" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-compact-disc"></i>
+            <span>Albums</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-tshirt"></i>
+            <span>Merchandise</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-star"></i>
+            <span>Artists</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-fire"></i>
+            <span>New Releases</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-tag"></i>
+            <span>Categories</span>
+        </a>
+
+        <hr class="my-4 border-gray-200">
+
+        <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Account</h2>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-shopping-bag"></i>
+            <span>My Orders</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+
+        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </nav>
+</aside>
