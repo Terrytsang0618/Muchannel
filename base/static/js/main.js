@@ -75,7 +75,7 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
         type === 'success' ? 'bg-green-500' :
-        type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+        type === 'error' ? 'bg-red-500' : 'bg-purple-600'
     } text-white`;
     notification.textContent = message;
 
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPath) {
-            link.classList.add('bg-blue-700');
+            link.classList.add('bg-purple-700');
         }
     });
 
