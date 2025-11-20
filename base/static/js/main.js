@@ -2,7 +2,7 @@
 
 // ===== UI Functions =====
 
-// Artists Sidebar Toggle
+// Sidebar Toggle
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
@@ -17,6 +17,16 @@ function toggleSidebar() {
         } else {
             document.body.style.overflow = '';
         }
+    }
+}
+
+// Toggle Sidebar Item (Collapsible menu items)
+function toggleSidebarItem(element) {
+    const submenu = element.nextElementSibling;
+
+    if (submenu && submenu.classList.contains('sidebar-submenu')) {
+        element.classList.toggle('active');
+        submenu.classList.toggle('active');
     }
 }
 
@@ -75,7 +85,7 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
         type === 'success' ? 'bg-green-500' :
-        type === 'error' ? 'bg-red-500' : 'bg-purple-600'
+        type === 'error' ? 'bg-red-500' : 'bg-gray-700'
     } text-white`;
     notification.textContent = message;
 
@@ -133,8 +143,8 @@ function renderProductCard(product) {
                 <p class="text-gray-500 text-sm mb-2">${product.artist || 'Various Artists'}</p>
                 <p class="text-gray-600 text-xs mb-3">${product.product_type}</p>
                 <div class="flex items-center justify-between">
-                    <span class="text-xl font-bold text-purple-600">$${product.price}</span>
-                    <button onclick="addToCart(${product.id})" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                    <span class="text-xl font-bold text-gray-800">$${product.price}</span>
+                    <button onclick="addToCart(${product.id})" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
                         <i class="fas fa-shopping-cart mr-1"></i>
                         Add
                     </button>
@@ -235,7 +245,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPath) {
-            link.classList.add('bg-purple-700');
+            link.classList.add('bg-gray-700');
         }
     });
 
