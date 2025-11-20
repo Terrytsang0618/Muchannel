@@ -1,60 +1,89 @@
 {% load static %}
-<!-- Artists Sidebar (Desktop Only) -->
+<!-- Sidebar (Desktop Only) -->
 <aside id="sidebar" class="sidebar-artists">
     <div class="sidebar-header">
-        <h3>Artists</h3>
+        <h3>Menu</h3>
         <a href="#" class="sidebar-close" onclick="toggleSidebar(); return false;">
             <i class="icon-x"></i>
         </a>
     </div>
 
     <div class="sidebar-content">
-        <!-- Artists Categories -->
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Popular Groups</h4>
-            <ul class="sidebar-menu">
-                <li><a href="#">BTS</a></li>
-                <li><a href="#">BLACKPINK</a></li>
-                <li><a href="#">TWICE</a></li>
-                <li><a href="#">EXO</a></li>
-                <li><a href="#">Stray Kids</a></li>
-                <li><a href="#">SEVENTEEN</a></li>
-                <li><a href="#">NewJeans</a></li>
-                <li><a href="#">aespa</a></li>
-            </ul>
+        <!-- Artists - Collapsible Menu Item -->
+        <div class="sidebar-item">
+            <a href="#" class="sidebar-item-toggle" onclick="toggleSidebarItem(this); return false;">
+                <span>Artists</span>
+                <i class="icon-chevron-down"></i>
+            </a>
+            <div class="sidebar-submenu">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Popular Groups</h4>
+                    <ul class="sidebar-menu">
+                        <li><a href="#">BTS</a></li>
+                        <li><a href="#">BLACKPINK</a></li>
+                        <li><a href="#">TWICE</a></li>
+                        <li><a href="#">EXO</a></li>
+                        <li><a href="#">Stray Kids</a></li>
+                        <li><a href="#">SEVENTEEN</a></li>
+                        <li><a href="#">NewJeans</a></li>
+                        <li><a href="#">aespa</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Solo Artists</h4>
+                    <ul class="sidebar-menu">
+                        <li><a href="#">IU</a></li>
+                        <li><a href="#">Taeyeon</a></li>
+                        <li><a href="#">G-Dragon</a></li>
+                        <li><a href="#">Jungkook</a></li>
+                        <li><a href="#">Lisa</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Browse by Genre</h4>
+                    <ul class="sidebar-menu">
+                        <li><a href="#">K-Pop</a></li>
+                        <li><a href="#">K-Hip Hop</a></li>
+                        <li><a href="#">K-R&B</a></li>
+                        <li><a href="#">K-Indie</a></li>
+                        <li><a href="#">Ballad</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">By Agency</h4>
+                    <ul class="sidebar-menu">
+                        <li><a href="#">HYBE</a></li>
+                        <li><a href="#">YG Entertainment</a></li>
+                        <li><a href="#">SM Entertainment</a></li>
+                        <li><a href="#">JYP Entertainment</a></li>
+                        <li><a href="#">ADOR</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Solo Artists</h4>
-            <ul class="sidebar-menu">
-                <li><a href="#">IU</a></li>
-                <li><a href="#">Taeyeon</a></li>
-                <li><a href="#">G-Dragon</a></li>
-                <li><a href="#">Jungkook</a></li>
-                <li><a href="#">Lisa</a></li>
-            </ul>
+        <!-- Events Menu Item -->
+        <div class="sidebar-item">
+            <a href="#" class="sidebar-item-link">
+                <span>Events</span>
+            </a>
         </div>
 
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">Browse by Genre</h4>
-            <ul class="sidebar-menu">
-                <li><a href="#">K-Pop</a></li>
-                <li><a href="#">K-Hip Hop</a></li>
-                <li><a href="#">K-R&B</a></li>
-                <li><a href="#">K-Indie</a></li>
-                <li><a href="#">Ballad</a></li>
-            </ul>
+        <!-- New Releases Menu Item -->
+        <div class="sidebar-item">
+            <a href="#" class="sidebar-item-link">
+                <span>New Releases</span>
+            </a>
         </div>
 
-        <div class="sidebar-section">
-            <h4 class="sidebar-title">By Agency</h4>
-            <ul class="sidebar-menu">
-                <li><a href="#">HYBE</a></li>
-                <li><a href="#">YG Entertainment</a></li>
-                <li><a href="#">SM Entertainment</a></li>
-                <li><a href="#">JYP Entertainment</a></li>
-                <li><a href="#">ADOR</a></li>
-            </ul>
+        <!-- MD/Merchandise Menu Item -->
+        <div class="sidebar-item">
+            <a href="#" class="sidebar-item-link">
+                <span>Merchandise</span>
+            </a>
         </div>
     </div>
 </aside>

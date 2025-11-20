@@ -35,69 +35,135 @@
     width: 320px;
     height: 100vh;
     background-color: #ffffff;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 33px 32px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: left 0.3s ease-in-out;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
     overflow-x: hidden;
+    border-radius: 0 4px 4px 0;
 }
 
 .sidebar-artists.active {
     left: 0;
+    transform: translateX(0);
 }
 
 /* Sidebar Header */
 .sidebar-header {
     position: sticky;
     top: 0;
-    background-color: #2250fc;
-    color: #ffffff;
-    padding: 20px;
+    background-color: #ffffff;
+    color: #444;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 10;
+    border-bottom: 1px solid #e4e6ef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .sidebar-header h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
+    letter-spacing: 0.5px;
+    color: #2e2e2e;
 }
 
 .sidebar-close {
-    color: #ffffff;
+    color: #444;
     font-size: 20px;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 4px;
 }
 
 .sidebar-close:hover {
-    opacity: 0.8;
+    opacity: 0.6;
+    transform: rotate(90deg);
 }
 
 .sidebar-close i {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 /* Sidebar Content */
 .sidebar-content {
-    padding: 20px;
+    padding: 10px 0;
+}
+
+/* Sidebar Item (Main menu items) */
+.sidebar-item {
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.sidebar-item-toggle,
+.sidebar-item-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    color: #444;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.sidebar-item-toggle:hover,
+.sidebar-item-link:hover {
+    background-color: #f5f7fa;
+    color: #2e2e2e;
+}
+
+.sidebar-item-toggle i {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-item-toggle.active i {
+    transform: rotate(180deg);
+}
+
+/* Sidebar Submenu (Collapsible content) */
+.sidebar-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #fafbfc;
+}
+
+.sidebar-submenu.active {
+    max-height: 2000px;
 }
 
 .sidebar-section {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.sidebar-section:first-child {
+    padding-top: 16px;
+}
+
+.sidebar-section:last-child {
+    padding-bottom: 16px;
 }
 
 .sidebar-title {
     font-family: "Poppins", sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     color: #999;
-    margin-bottom: 12px;
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    letter-spacing: 0.8px;
 }
 
 /* Sidebar Menu */
@@ -113,19 +179,23 @@
 
 .sidebar-menu a {
     display: block;
-    padding: 10px 15px;
+    padding: 8px 12px;
     color: #444;
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
     font-family: "Poppins", sans-serif;
     text-decoration: none;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .sidebar-menu a:hover {
-    background-color: #f5f7fa;
-    color: #2250fc;
-    padding-left: 20px;
+    background-color: #ffffff;
+    color: #2e2e2e;
+    padding-left: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Sidebar Overlay */
@@ -139,7 +209,8 @@
     z-index: 999;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-overlay.active {
