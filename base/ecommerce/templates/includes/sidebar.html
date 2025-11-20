@@ -1,66 +1,63 @@
 {% load static %}
-<!-- Left Sidebar -->
-<aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white shadow-lg transform sidebar-transition md:transform-none sidebar-closed md:sidebar-closed-none z-30 mt-20 md:mt-0 overflow-y-auto custom-scrollbar">
-    <nav class="p-4 space-y-2">
-        <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Main Menu</h2>
-
-        <a href="{% url 'home' %}" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
+<!-- Artists Sidebar (Desktop Only) -->
+<aside id="sidebar" class="sidebar-artists">
+    <div class="sidebar-header">
+        <h3>Artists</h3>
+        <a href="#" class="sidebar-close" onclick="toggleSidebar(); return false;">
+            <i class="icon-x"></i>
         </a>
+    </div>
 
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-compact-disc"></i>
-            <span>Albums</span>
-        </a>
+    <div class="sidebar-content">
+        <!-- Artists Categories -->
+        <div class="sidebar-section">
+            <h4 class="sidebar-title">Popular Groups</h4>
+            <ul class="sidebar-menu">
+                <li><a href="#">BTS</a></li>
+                <li><a href="#">BLACKPINK</a></li>
+                <li><a href="#">TWICE</a></li>
+                <li><a href="#">EXO</a></li>
+                <li><a href="#">Stray Kids</a></li>
+                <li><a href="#">SEVENTEEN</a></li>
+                <li><a href="#">NewJeans</a></li>
+                <li><a href="#">aespa</a></li>
+            </ul>
+        </div>
 
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-tshirt"></i>
-            <span>Merchandise</span>
-        </a>
+        <div class="sidebar-section">
+            <h4 class="sidebar-title">Solo Artists</h4>
+            <ul class="sidebar-menu">
+                <li><a href="#">IU</a></li>
+                <li><a href="#">Taeyeon</a></li>
+                <li><a href="#">G-Dragon</a></li>
+                <li><a href="#">Jungkook</a></li>
+                <li><a href="#">Lisa</a></li>
+            </ul>
+        </div>
 
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-star"></i>
-            <span>Artists</span>
-        </a>
+        <div class="sidebar-section">
+            <h4 class="sidebar-title">Browse by Genre</h4>
+            <ul class="sidebar-menu">
+                <li><a href="#">K-Pop</a></li>
+                <li><a href="#">K-Hip Hop</a></li>
+                <li><a href="#">K-R&B</a></li>
+                <li><a href="#">K-Indie</a></li>
+                <li><a href="#">Ballad</a></li>
+            </ul>
+        </div>
 
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-fire"></i>
-            <span>New Releases</span>
-        </a>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-tag"></i>
-            <span>Categories</span>
-        </a>
-
-        <hr class="my-4 border-gray-200">
-
-        <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Account</h2>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-shopping-bag"></i>
-            <span>My Orders</span>
-        </a>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-heart"></i>
-            <span>Wishlist</span>
-        </a>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-        </a>
-
-        <a href="#" class="nav-link flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-        </a>
-    </nav>
+        <div class="sidebar-section">
+            <h4 class="sidebar-title">By Agency</h4>
+            <ul class="sidebar-menu">
+                <li><a href="#">HYBE</a></li>
+                <li><a href="#">YG Entertainment</a></li>
+                <li><a href="#">SM Entertainment</a></li>
+                <li><a href="#">JYP Entertainment</a></li>
+                <li><a href="#">ADOR</a></li>
+            </ul>
+        </div>
+    </div>
 </aside>
+
+<!-- Sidebar Overlay (for closing sidebar on click outside) -->
+<div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleSidebar();"></div>

@@ -1,69 +1,93 @@
 {% load static %}
-<!-- Mobile Overlay -->
-<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden" onclick="closeSidebar()"></div>
-
 <!-- Header -->
-<header class="bg-white shadow-md fixed top-0 left-0 right-0 z-10">
-    <div class="flex items-center justify-between px-4 py-3">
-        <!-- Mobile Menu Button & Logo -->
-        <div class="flex items-center space-x-4">
-            <button onclick="toggleSidebar()" class="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-            <a href="{% url 'home' %}" class="flex items-center space-x-2">
-                <i class="fas fa-music text-2xl text-blue-600"></i>
-                <span class="text-xl font-bold text-gray-800 hidden sm:block">K-pop Store</span>
-            </a>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-2xl mx-4 hidden sm:block">
-            <div class="relative">
-                <input
-                    type="text"
-                    placeholder="Search albums, merchandise..."
-                    class="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onkeypress="handleSearch(event)"
-                >
-                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+<header id="header" data-transparent="true" class="light header-logo-center">
+    <div class="header-inner">
+        <div class="container">
+            <!--Logo-->
+            <div id="logo">
+                <a href="{% url 'home' %}">
+                    <span class="logo-default">K-POP</span>
+                    <span class="logo-dark">K-POP </span>
+                </a>
             </div>
-        </div>
-
-        <!-- Header Actions -->
-        <div class="flex items-center space-x-4">
-            <button class="relative text-gray-600 hover:text-gray-900">
-                <i class="fas fa-shopping-cart text-xl"></i>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-            </button>
-            <button class="text-gray-600 hover:text-gray-900 hidden sm:block">
-                <i class="fas fa-bell text-xl"></i>
-            </button>
-
-            <!-- User Menu (shown when authenticated) -->
-            <div id="user-menu"></div>
-
-            <!-- Auth Buttons (shown when not authenticated) -->
-            <div id="auth-buttons" class="flex items-center space-x-2">
-                <button id="login-btn" class="text-gray-600 hover:text-purple-600 font-medium">
-                    Login
-                </button>
-                <button id="register-btn" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
-                    Register
-                </button>
+            <!--End: Logo-->
+            <!-- Search -->
+            <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
+                <form class="search-form" action="#" method="get">
+                    <input class="form-control" name="q" type="text" placeholder="Type & Search..." />
+                    <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
+                </form>
             </div>
-        </div>
-    </div>
-
-    <!-- Mobile Search -->
-    <div class="px-4 pb-3 sm:hidden">
-        <div class="relative">
-            <input
-                type="text"
-                placeholder="Search..."
-                class="w-full px-4 py-2 pl-10 pr-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onkeypress="handleSearch(event)"
-            >
-            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+            <!-- end: search -->
+            <!--Header Extras-->
+            <div class="header-extras">
+                <ul>
+                    <li>
+                        <a id="btn-search" href="#"> <i class="icon-search"></i></a>
+                    </li>
+                    <li class="dropdown desktop-only">
+                        <a href="#"><i class="icon-user"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="login-btn">Login</a></li>
+                            <li><a href="#" id="register-btn">Register</a></li>
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="#">Orders</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </li>
+                    <li class="desktop-only">
+                        <a href="#">
+                            <i class="icon-shopping-cart"></i>
+                            <span id="cart-count" class="badge bg-danger">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="p-dropdown">
+                            <a href="#"><i class="icon-globe"></i><span>EN</span></a>
+                            <ul class="p-dropdown-content">
+                                <li><a href="#">English</a></li>
+                                <li><a href="#">Korean</a></li>
+                                <li><a href="#">Japanese</a></li>
+                                <li><a href="#">Chinese</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--end: Header Extras-->
+            <!--Navigation Resposnive Trigger-->
+            <div id="mainMenu-trigger">
+                <a class="lines-button x"><span class="lines"></span></a>
+            </div>
+            <!--end: Navigation Resposnive Trigger-->
+            <!--Navigation-->
+            <div id="mainMenu">
+                <div class="container">
+                    <nav>
+                        <!--Left Menu (Desktop: Sidebar Toggle, New, Music, MD | Mobile: New, Music, MD, Artists)-->
+                        <ul>
+                            <!-- Sidebar Toggle: Only visible on Desktop -->
+                            <li class="desktop-only-menu">
+                                <a href="#" onclick="toggleSidebar(); return false;">
+                                    <i class="icon-menu"></i>
+                                </a>
+                            </li>
+                            <li><a href="#">New</a></li>
+                            <li><a href="#">Music</a></li>
+                            <li><a href="#">MD</a></li>
+                            <!-- Artists: Only visible on Mobile -->
+                            <li class="d-lg-none"><a href="#">Artists</a></li>
+                        </ul>
+                        <!--Right Menu (Empty on Desktop, used by mobile menu)-->
+                        <ul>
+                            <!-- Empty - header-extras handles icons on desktop -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!--end: Navigation-->
         </div>
     </div>
 </header>
+<!-- end: Header -->

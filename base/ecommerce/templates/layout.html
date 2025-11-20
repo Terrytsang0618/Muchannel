@@ -2,15 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}NFT Ecommerce{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="K-pop Store" />
+    <meta name="description" content="K-pop Store - Your destination for K-pop albums and merchandise">
+    <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Document title -->
+    <title>{% block title %}K-pop Store{% endblock %}</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- POLO Template Stylesheets & Fonts (from assets) -->
+    <link href="{% static 'assets/css/plugins.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+    <!-- Custom Styles (override POLO template) -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN (optional - can be used alongside POLO template) -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,26 +29,39 @@
 
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-50">
-    <!-- Include Header -->
-    {% include 'includes/header.html' %}
+<body>
+    <!-- Body Inner -->
+    <div class="body-inner">
+        <!-- Include Header -->
+        {% include 'includes/header.html' %}
 
-    <!-- Main Container -->
-    <div class="flex pt-20">
-        <!-- Include Sidebar -->
+        <!-- Include Artists Sidebar (Desktop Only) -->
         {% include 'includes/sidebar.html' %}
 
-        <!-- Main Content -->
-        <main class="flex-1 p-6 md:ml-0 min-h-screen">
+        <!-- Page Content -->
+        <section id="page-content">
+            <div class="container">
             {% block content %}
             {% endblock %}
-        </main>
+            </div>
+        </section>
+        <!-- end: Page Content -->
     </div>
+    <!-- end: Body Inner -->
 
-    <!-- JavaScript -->
+    <!-- Scroll top -->
+    <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+
+    <!-- POLO Template Scripts (from assets) -->
+    <script src="{% static 'assets/js/jquery.js' %}"></script>
+    <script src="{% static 'assets/js/plugins.js' %}"></script>
+    <script src="{% static 'assets/js/functions.js' %}"></script>
+
+    <!-- Custom JavaScript -->
     <script src="{% static 'js/api.js' %}"></script>
     <script src="{% static 'js/auth.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

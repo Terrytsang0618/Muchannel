@@ -2,25 +2,33 @@
 
 // ===== UI Functions =====
 
-// Mobile menu toggle
+// Artists Sidebar Toggle
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+    const overlay = document.getElementById('sidebar-overlay');
 
     if (sidebar && overlay) {
-        sidebar.classList.toggle('sidebar-closed');
-        overlay.classList.toggle('hidden');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+
+        // Prevent body scroll when sidebar is open
+        if (sidebar.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
     }
 }
 
-// Close sidebar when clicking overlay
+// Close sidebar
 function closeSidebar() {
     const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+    const overlay = document.getElementById('sidebar-overlay');
 
     if (sidebar && overlay) {
-        sidebar.classList.add('sidebar-closed');
-        overlay.classList.add('hidden');
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
     }
 }
 

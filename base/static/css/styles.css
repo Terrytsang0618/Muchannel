@@ -1,5 +1,170 @@
 /* Custom styles for the ecommerce site */
 
+/* Header customizations */
+/* Hide Artists menu item on desktop (≥992px), show on mobile */
+@media (min-width: 992px) {
+    #mainMenu .d-lg-none {
+        display: none !important;
+    }
+}
+
+/* Hide member and cart icons on mobile (≤991px) */
+@media (max-width: 991.98px) {
+    .header-extras .desktop-only {
+        display: none !important;
+    }
+    /* Hide sidebar toggle in mainMenu on mobile */
+    #mainMenu .desktop-only-menu {
+        display: none !important;
+    }
+    /* Hide sidebar completely on mobile */
+    .sidebar-artists {
+        display: none !important;
+    }
+}
+
+/* ===================================
+   Artists Sidebar Styles
+   =================================== */
+
+/* Sidebar Container */
+.sidebar-artists {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 320px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-artists.active {
+    left: 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    position: sticky;
+    top: 0;
+    background-color: #2250fc;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+
+.sidebar-close {
+    color: #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.sidebar-close:hover {
+    opacity: 0.8;
+}
+
+.sidebar-close i {
+    font-size: 18px;
+}
+
+/* Sidebar Content */
+.sidebar-content {
+    padding: 20px;
+}
+
+.sidebar-section {
+    margin-bottom: 30px;
+}
+
+.sidebar-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 2px;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #444;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover {
+    background-color: #f5f7fa;
+    color: #2250fc;
+    padding-left: 20px;
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Custom Scrollbar for Sidebar */
+.sidebar-artists::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-artists::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar-artists::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.sidebar-artists::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 /* Sidebar transition */
 .sidebar-transition {
     transition: transform 0.3s ease-in-out;
