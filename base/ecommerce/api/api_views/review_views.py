@@ -2,7 +2,7 @@ from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
-from ecommerce.models.models import Review
+from ecommerce.models import Review
 from ecommerce.api.serializers import ReviewSerializer
 
 

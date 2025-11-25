@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ecommerce.models.models import Order, OrderItem
+from ecommerce.models import Order, OrderItem
 from .product_serializers import ProductListSerializer
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ecommerce.models.models import Category, Product, Artist
+from ecommerce.models import Category, Product, Artist
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             'id', 'title', 'slug', 'price', 'product_type',
-            'category_name', 'image_url', 'is_featured', 'is_trending',
+            'category_name', 'image', 'is_featured', 'is_trending',
             'in_stock', 'artist', 'created_at'
         ]
         read_only_fields = ['id', 'created_at', 'in_stock']
@@ -45,7 +45,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             'id', 'title', 'slug', 'description', 'price',
-            'product_type', 'category', 'category_id', 'image_url', 'stock',
+            'product_type', 'category', 'category_id', 'image', 'stock',
             'is_featured', 'is_trending', 'is_active',
             'artist', 'release_date', 'label', 'version',
             'average_rating', 'review_count',

@@ -1,0 +1,37 @@
+/* CKEditor 5 Custom Styles */
+
+/* Make font size dropdown scrollable */
+.ck.ck-dropdown__panel .ck-list {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Remove font size preview - show all options in normal size */
+.ck.ck-dropdown__panel .ck-fontsize-option {
+    font-size: 14px !important;
+}
+
+/* Ensure dropdown button text is normal size */
+.ck.ck-fontsize-dropdown .ck-button__label {
+    font-size: 14px !important;
+}
+
+/* Style the scrollbar for better UX */
+.ck.ck-dropdown__panel .ck-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ck.ck-dropdown__panel .ck-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.ck.ck-dropdown__panel .ck-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.ck.ck-dropdown__panel .ck-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ecommerce.models.models import Cart, Product
+from ecommerce.models import Cart, Product
 from .product_serializers import ProductListSerializer
 
 

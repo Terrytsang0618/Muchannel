@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from ecommerce.models.models import Order
+from ecommerce.models import Order
 from ecommerce.api.serializers import OrderSerializer
 
 
