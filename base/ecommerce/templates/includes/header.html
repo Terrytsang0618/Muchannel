@@ -73,9 +73,9 @@
                                     <i class="icon-menu"></i>
                                 </a>
                             </li>
-                            <li><a href="#">New</a></li>
-                            <li><a href="#">Music</a></li>
-                            <li><a href="#">MD</a></li>
+                            <li><a href="{% url 'products_list' %}">New</a></li>
+                            <li><a href="{% url 'products_list' %}?category=music">Music</a></li>
+                            <li><a href="{% url 'products_list' %}?category=md">MD</a></li>
                             <!-- Artists: Only visible on Mobile -->
                             <li class="d-lg-none"><a href="#">Artists</a></li>
                         </ul>

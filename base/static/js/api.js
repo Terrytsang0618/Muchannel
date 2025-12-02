@@ -95,8 +95,10 @@ const API = {
 
     // Categories
     categories: {
-        getAll: async () => {
-            const response = await axios.get(`${API_BASE_URL}/categories/`);
+        getAll: async (params = {}) => {
+            const queryString = new URLSearchParams(params).toString();
+            const url = `${API_BASE_URL}/categories/${queryString ? '?' + queryString : ''}`;
+            const response = await axios.get(url);
             return response.data;
         },
 

@@ -275,3 +275,71 @@
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
+
+/* ===================================
+   Product Grid Styles
+   =================================== */
+
+/* Product card styling - only image has rounded corners */
+#productGrid .portfolio-item {
+    margin-bottom: 30px !important;
+    padding: 0 10px !important; /* Add horizontal spacing */
+}
+
+/* Ensure grid has negative margin to offset item padding */
+#productGrid.grid-layout {
+    margin: 0 -10px !important;
+}
+
+#productGrid .portfolio-item .portfolio-item-wrap {
+    background: transparent !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Only the image gets rounded corners and shadow */
+#productGrid .portfolio-item .portfolio-image {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+}
+
+#productGrid .portfolio-item .portfolio-image:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+#productGrid .portfolio-item .portfolio-image img {
+    border-radius: 12px !important;
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease !important;
+}
+
+#productGrid .portfolio-item.img-zoom:hover .portfolio-image img {
+    transform: scale(1.05) !important;
+}
+
+/* Description sits below the image - no rounded corners */
+#productGrid .portfolio-item .portfolio-description {
+    padding: 15px 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+/* Badge positioning for product cards */
+#productGrid .portfolio-item .portfolio-image .badge {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 10 !important;
+    border-radius: 6px !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
