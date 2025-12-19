@@ -2,6 +2,7 @@ from .product_serializers import (
     CategorySerializer,
     ProductListSerializer,
     ProductDetailSerializer,
+    ProductImageSerializer,
     ArtistSerializer,
 )
 from .cart_serializers import CartItemSerializer

@@ -6,8 +6,8 @@
             <!--Logo-->
             <div id="logo">
                 <a href="{% url 'home' %}">
-                    <span class="logo-default">K-POP</span>
-                    <span class="logo-dark">K-POP </span>
+                    <span class="logo-default">ATMOSTARS</span>
+                    <span class="logo-dark">ATMOSTARS </span>
                 </a>
             </div>
             <!--End: Logo-->
@@ -25,16 +25,35 @@
                     <li>
                         <a id="btn-search" href="#"> <i class="icon-search"></i></a>
                     </li>
-                    <li class="dropdown desktop-only">
-                        <a href="#"><i class="icon-user"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" id="login-btn">Login</a></li>
-                            <li><a href="#" id="register-btn">Register</a></li>
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Orders</a></li>
-                            <li><a href="#">Wishlist</a></li>
-                            <li><a href="#">Settings</a></li>
-                        </ul>
+                    <li class="desktop-only" id="user-account-menu">
+                        <div class="p-dropdown">
+                            <a href="#"><i class="icon-user"></i></a>
+                            <ul class="p-dropdown-content">
+                                <!-- Auth Buttons (shown when NOT logged in) - Default visible for anonymous users -->
+                                <li id="auth-login-link">
+                                    <a href="#" onclick="openAuthModal('login'); return false;">Login</a>
+                                </li>
+                                <li id="auth-register-link">
+                                    <a href="#" onclick="openAuthModal('register'); return false;">Register</a>
+                                </li>
+                                <!-- User Menu (shown when logged in) - Default hidden -->
+                                <li id="user-profile-link" style="display: none;">
+                                    <a href="#"><i class="icon-user"></i> Profile</a>
+                                </li>
+                                <li id="user-orders-link" style="display: none;">
+                                    <a href="#"><i class="icon-shopping-bag"></i> My Orders</a>
+                                </li>
+                                <li id="user-wishlist-link" style="display: none;">
+                                    <a href="#"><i class="icon-heart"></i> Wishlist</a>
+                                </li>
+                                <li id="user-settings-link" style="display: none;">
+                                    <a href="#"><i class="icon-settings"></i> Settings</a>
+                                </li>
+                                <li id="user-logout-link" style="display: none;">
+                                    <a href="#" onclick="handleLogout(); return false;"><i class="icon-log-out"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="desktop-only">
                         <a href="#">

@@ -1,6 +1,52 @@
 /* Custom styles for the ecommerce site */
 
 /* Header customizations */
+
+/* Logo responsive sizing - Override POLO template styles */
+#header .header-inner #logo a .logo-default,
+#header .header-inner #logo a .logo-dark,
+#header #header-wrap #logo a .logo-default,
+#header #header-wrap #logo a .logo-dark {
+    font-size: 50px !important; /* Default size for desktop */
+    font-weight: 700 !important;
+    transition: font-size 0.3s ease;
+}
+
+/* Tablet screens (≤768px) */
+@media (max-width: 768px) {
+    #header .header-inner #logo a .logo-default,
+    #header .header-inner #logo a .logo-dark,
+    #header #header-wrap #logo a .logo-default,
+    #header #header-wrap #logo a .logo-dark {
+        font-size: 40px !important;
+    }
+}
+
+/* Phone screens (≤576px) */
+@media (max-width: 576px) {
+    #header .header-inner #logo a .logo-default,
+    #header .header-inner #logo a .logo-dark,
+    #header #header-wrap #logo a .logo-default,
+    #header #header-wrap #logo a .logo-dark {
+        font-size: 30px !important;
+    }
+
+    /* Hide text in nav-tabs, show only icons */
+    .nav-tabs .nav-link {
+        font-size: 0 !important;
+        padding: 12px 15px !important;
+    }
+
+    .nav-tabs .nav-link i {
+        font-size: 18px !important;
+    }
+
+    /* Reduce tab content padding on phone */
+    .tabs.tabs-folder .tab-content {
+        padding: 10px !important;
+    }
+}
+
 /* Hide Artists menu item on desktop (≥992px), show on mobile */
 @media (min-width: 992px) {
     #mainMenu .d-lg-none {

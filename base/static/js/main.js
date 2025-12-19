@@ -69,13 +69,27 @@ async function updateCartCount() {
 }
 
 async function addToCart(productId) {
+    // Check if user is authenticated first
     try {
-        await API.cart.addItem(productId, 1);
-        await updateCartCount();
-        showNotification('Product added to cart!', 'success');
+        await API.auth.getCurrentUser();
+
+        // User is authenticated, proceed with adding to cart
+        try {
+            await API.cart.addItem(productId, 1);
+            await updateCartCount();
+            showNotification('Product added to cart!', 'success');
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            showNotification('Failed to add item to cart. Please try again.', 'error');
+        }
     } catch (error) {
-        console.error('Error adding to cart:', error);
+        // User is not authenticated, show login modal
+        console.log('User not authenticated, showing login modal');
         showNotification('Please login to add items to cart', 'error');
+
+        if (typeof openAuthModal === 'function') {
+            openAuthModal('login');
+        }
     }
 }
 
@@ -83,16 +97,65 @@ async function addToCart(productId) {
 
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
-        type === 'success' ? 'bg-green-500' :
-        type === 'error' ? 'bg-red-500' : 'bg-gray-700'
-    } text-white`;
-    notification.textContent = message;
 
+    // Set background color and icon based on type
+    let bgColor, borderColor, icon;
+    if (type === 'success') {
+        bgColor = '#28a745'; // Green
+        borderColor = '#218838';
+        icon = '<i class="icon-check" style="margin-right: 8px;"></i>';
+    } else if (type === 'error') {
+        bgColor = '#dc3545'; // Red
+        borderColor = '#c82333';
+        icon = '<i class="icon-close" style="margin-right: 8px;"></i>';
+    } else {
+        bgColor = '#343a40'; // Gray
+        borderColor = '#23272b';
+        icon = '<i class="icon-info" style="margin-right: 8px;"></i>';
+    }
+
+    // Apply inline styles for guaranteed visibility with responsive sizing
+    const isMobile = window.innerWidth <= 576;
+    notification.style.cssText = `
+        position: fixed;
+        top: ${isMobile ? '60px' : '80px'};
+        right: ${isMobile ? '10px' : '20px'};
+        left: ${isMobile ? '10px' : 'auto'};
+        background-color: ${bgColor};
+        color: #ffffff;
+        padding: ${isMobile ? '12px 15px' : '15px 20px'};
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 99999;
+        min-width: ${isMobile ? 'auto' : '250px'};
+        max-width: ${isMobile ? 'calc(100% - 20px)' : '400px'};
+        font-size: ${isMobile ? '13px' : '14px'};
+        font-weight: 500;
+        opacity: 0;
+        transform: translateX(400px);
+        transition: all 0.3s ease-in-out;
+        border-left: 4px solid ${borderColor};
+        display: flex;
+        align-items: center;
+    `;
+
+    notification.innerHTML = icon + message;
     document.body.appendChild(notification);
 
+    // Trigger animation
     setTimeout(() => {
-        notification.remove();
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+
+    // Auto-remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(400px)';
+
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
     }, 3000);
 }
 

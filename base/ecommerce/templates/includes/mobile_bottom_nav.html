@@ -1,0 +1,23 @@
+{% load static %}
+<!-- Mobile Bottom Tab Bar (Only visible on mobile devices) -->
+<div class="mobile-bottom-tab-bar">
+    <a href="{% url 'home' %}" class="tab-item active" data-tab="home">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="#" class="tab-item" data-tab="search" id="mobile-search-btn">
+        <i class="fas fa-search"></i>
+        <span>Search</span>
+    </a>
+    <a href="#" class="tab-item" data-tab="cart" id="mobile-cart-btn">
+        <div class="tab-icon-wrapper">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge" id="mobile-cart-count">0</span>
+        </div>
+        <span>Cart</span>
+    </a>
+    <a href="#" class="tab-item" data-tab="user" id="mobile-user-btn">
+        <i class="fas fa-user"></i>
+        <span>User</span>
+    </a>
+</div>

@@ -21,10 +21,18 @@ def artist_banner_path(instance, filename):
 
 
 def product_image_path(instance, filename):
-    """Upload path: products/{artist_slug}/{filename} or products/no-artist/{filename}"""
+    """Upload path: products/{artist_slug}/{filename} or products/no-artist/{filename}
+    DEPRECATED: Kept for migration compatibility. Use ProductImage model instead."""
     if instance.artist:
         return f'products/{instance.artist.slug}/{filename}'
     return f'products/no-artist/{filename}'
+
+
+def product_gallery_image_path(instance, filename):
+    """Upload path for product gallery images: products/{artist_slug}/gallery/{filename}"""
+    if instance.product.artist:
+        return f'products/{instance.product.artist.slug}/gallery/{filename}'
+    return f'products/no-artist/gallery/{filename}'
 
 
 class Category(models.Model):
@@ -128,7 +136,6 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0)], help_text="Current selling price")
 
     # Product details
-    image = models.ImageField(upload_to=product_image_path, blank=True, null=True, help_text="Main product image")
     stock = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
     # Status flags
@@ -191,6 +198,33 @@ class Product(models.Model):
         if self.original_price > 0 and self.is_on_sale:
             return int(((self.original_price - self.price) / self.original_price) * 100)
         return 0
+
+
+class ProductImage(models.Model):
+    """Product Gallery Images - Multiple images per product"""
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=product_gallery_image_path, help_text="Product image")
+    alt_text = models.CharField(max_length=200, blank=True, help_text="Alternative text for accessibility")
+    display_order = models.IntegerField(default=0, help_text="Order to display images (lower numbers first)")
+    is_primary = models.BooleanField(default=False, help_text="Set as primary/main product image")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['display_order', 'created_at']
+        verbose_name = "Product Image"
+        verbose_name_plural = "Product Images"
+
+    def __str__(self):
+        return f"{self.product.title} - Image {self.display_order}"
+
+    def save(self, *args, **kwargs):
+        """If this is set as primary, remove primary flag from other images"""
+        if self.is_primary:
+            # Remove primary flag from all other images for this product
+            ProductImage.objects.filter(product=self.product, is_primary=True).exclude(pk=self.pk).update(is_primary=False)
+        super().save(*args, **kwargs)
 
 
 class Review(models.Model):

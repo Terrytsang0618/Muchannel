@@ -1,6 +1,8 @@
 // API Service Module for K-pop Store
-// Base API URL
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+// Base API URL - Use window.location.origin to match the current domain
+const API_BASE_URL = `${window.location.origin}/api`;
+console.log('🌐 [API] Base URL:', API_BASE_URL);
+console.log('🍪 [API] Cookies enabled (withCredentials):', true);
 
 // Configure Axios defaults
 axios.defaults.withCredentials = true; // Enable sending cookies with requests
@@ -69,6 +71,12 @@ const API = {
             return response.data;
         },
 
+        getBySlug: async (slug) => {
+            // Alias for getById - more semantic for slug-based lookups
+            const response = await axios.get(`${API_BASE_URL}/products/${slug}/`);
+            return response.data;
+        },
+
         search: async (query) => {
             const response = await axios.get(`${API_BASE_URL}/products/?search=${query}`);
             return response.data;
@@ -116,6 +124,15 @@ const API = {
         },
 
         addItem: async (productId, quantity = 1) => {
+            const response = await axios.post(`${API_BASE_URL}/cart/`, {
+                product_id: productId,
+                quantity: quantity
+            });
+            return response.data;
+        },
+
+        add: async (productId, quantity = 1) => {
+            // Alias for addItem - shorter method name
             const response = await axios.post(`${API_BASE_URL}/cart/`, {
                 product_id: productId,
                 quantity: quantity

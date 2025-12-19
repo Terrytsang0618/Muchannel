@@ -1,3 +1,4 @@
+from django.db.models.constraints import RawSQL
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken
 
@@ -9,8 +10,16 @@ class CookieJWTAuthentication(JWTAuthentication):
     """
 
     def authenticate(self, request):
+        # Debug: Print request info
+        print("\n" + "="*60)
+        print(f"🔍 [AUTH] Request: {request.method} {request.path}")
+        print(f"🔍 [AUTH] All cookies received: {dict(request.COOKIES)}")
+        print(f"🔍 [AUTH] Cookie header: {request.META.get('HTTP_COOKIE', 'None')}")
+
         # First, try to get token from cookie
         raw_token = request.COOKIES.get('access_token')
+        print(f"🔍 [AUTH] access_token cookie value: {raw_token[:50] + '...' if raw_token else 'None'}")
+        print("="*60 + "\n")
 
         # If no token in cookie, try the standard Authorization header
         if raw_token is None:

@@ -4,22 +4,22 @@
 {% block title %}K-pop Products - Muchannel{% endblock %}
 
 {% block extra_css %}
+<!-- Custom Filter Controls (Sort & Search buttons) -->
 <style>
-    /* Filter Container Layout */
+    /* Filter Container - horizontal layout with category filter + controls */
     #filterContainer {
-        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 20px;
+        margin-bottom: 40px;
     }
 
     #categoryFilter {
         flex: 1;
     }
 
-
-    /* Filter Controls */
+    /* Circular Sort & Search Buttons */
     .filter-controls {
         display: flex;
         gap: 15px;
@@ -30,7 +30,6 @@
         position: relative;
     }
 
-    /* Circular Filter Buttons */
     .filter-btn {
         width: 45px;
         height: 45px;
@@ -44,7 +43,6 @@
         transition: all 0.3s ease;
         font-size: 18px;
         color: #666;
-        z-index: 100;
     }
 
     .filter-btn:hover {
@@ -61,7 +59,7 @@
         color: #fff;
     }
 
-    /* Filter Dropdown */
+    /* Filter Dropdowns */
     .filter-dropdown {
         position: absolute;
         top: 55px;
@@ -98,10 +96,6 @@
     .filter-dropdown-list {
         list-style: none;
         padding: 10px 0;
-        margin: 0;
-    }
-
-    .filter-dropdown-list li {
         margin: 0;
     }
 
@@ -171,7 +165,7 @@
         color: #fff;
     }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
         #filterContainer {
             flex-direction: column;
@@ -182,85 +176,88 @@
             justify-content: flex-end;
             margin-top: 15px;
         }
-
-        .filter-dropdown {
-            right: 0;
-        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Page Header -->
-<div class="heading-text heading-section">
-    <h2>K-pop Products</h2>
-    <p class="lead">Browse our collection of K-pop albums and merchandise</p>
-</div>
+<!-- SHOP PAGE -->
+<section id="shop-page" class="shop-page p-t-80 p-b-80">
+    <div class="container">
 
-<!-- Loading State -->
-<div id="loading" style="text-align: center; padding: 60px 0;">
-    <i class="fa fa-spinner fa-spin fa-3x text-muted"></i>
-    <p class="text-muted m-t-20">Loading products...</p>
-</div>
+        <!-- Page Header (POLO template heading) -->
+        <div class="heading-text heading-section">
+            <h2>K-pop Products</h2>
+            <p class="lead">Browse our collection of K-pop albums and merchandise</p>
+        </div>
 
-<!-- Category Filter with Sort & Search -->
-<div id="filterContainer" style="display: none; margin-bottom: 40px;">
-    <nav id="categoryFilter" class="grid-filter gf-outline" data-layout="#productGrid" style="margin-bottom: 0;">
-        <ul id="filterList">
-            <li class="active"><a href="#" data-category="*">All Products</a></li>
-            <!-- Categories will be loaded here by JavaScript -->
-        </ul>
-        <!-- <div class="grid-active-title">All Products</div> -->
-    </nav>
+        <!-- Loading State -->
+        <div id="loading" style="text-align: center; padding: 60px 0;">
+            <i class="fa fa-spinner fa-spin fa-3x text-muted"></i>
+            <p class="text-muted m-t-20">Loading products...</p>
+        </div>
 
-    <!-- Sort & Search Controls -->
-    <div class="filter-controls">
-        <!-- Sort Button -->
-        <div class="filter-control-item" id="sortControl">
-            <button class="filter-btn" id="sortBtn" title="Sort By">
-                <i class="icon-arrow-down"></i>
-            </button>
-            <div class="filter-dropdown" id="sortDropdown">
-                <div class="filter-dropdown-header">Sort By</div>
-                <ul class="filter-dropdown-list">
-                    <li><a href="#" data-sort="newest">Newest</a></li>
-                    <li><a href="#" data-sort="oldest">Oldest</a></li>
-                    <li><a href="#" data-sort="price-low">Price: Low to High</a></li>
-                    <li><a href="#" data-sort="price-high">Price: High to Low</a></li>
-                    <li><a href="#" data-sort="name-az">Name: A-Z</a></li>
-                    <li><a href="#" data-sort="name-za">Name: Z-A</a></li>
+        <!-- Category Filter with Sort & Search (POLO grid-filter + custom controls) -->
+        <div id="filterContainer" style="display: none;">
+            <nav id="categoryFilter" class="grid-filter gf-outline" data-layout="#productGrid" style="margin-bottom: 0;">
+                <ul id="filterList">
+                    <li class="active"><a href="#" data-category="*">All Products</a></li>
+                    <!-- Categories will be loaded here by JavaScript -->
                 </ul>
+            </nav>
+
+            <!-- Sort & Search Controls (Custom Addition) -->
+            <div class="filter-controls">
+                <!-- Sort Button -->
+                <div class="filter-control-item" id="sortControl">
+                    <button class="filter-btn" id="sortBtn" title="Sort By">
+                        <i class="icon-arrow-down"></i>
+                    </button>
+                    <div class="filter-dropdown" id="sortDropdown">
+                        <div class="filter-dropdown-header">Sort By</div>
+                        <ul class="filter-dropdown-list">
+                            <li><a href="#" data-sort="newest">Newest</a></li>
+                            <li><a href="#" data-sort="oldest">Oldest</a></li>
+                            <li><a href="#" data-sort="price-low">Price: Low to High</a></li>
+                            <li><a href="#" data-sort="price-high">Price: High to Low</a></li>
+                            <li><a href="#" data-sort="name-az">Name: A-Z</a></li>
+                            <li><a href="#" data-sort="name-za">Name: Z-A</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Search Button -->
+                <div class="filter-control-item" id="searchControl">
+                    <button class="filter-btn" id="searchBtn" title="Search">
+                        <i class="icon-search"></i>
+                    </button>
+                    <div class="filter-dropdown filter-search-box" id="searchDropdown">
+                        <input type="text" id="productSearchInput" class="form-control" placeholder="Search products...">
+                        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">
+                            <i class="icon-x"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+        </div>
+        <!-- end: Category Filter -->
+
+        <!-- Products Grid (POLO portfolio grid) -->
+        <div id="productGrid" class="grid-layout portfolio-4-columns" data-margin="20" style="display: none; position: relative; min-height: 400px;">
+            <!-- Products will be loaded here by JavaScript -->
+        </div>
+        <!-- end: Products Grid -->
+
+        <!-- No Products Message -->
+        <div id="noProducts" class="text-center" style="display: none; padding: 60px 0;">
+            <i class="fa fa-shopping-bag fa-4x text-muted"></i>
+            <h3 class="m-t-20">No products found</h3>
+            <p class="text-muted">Please try a different category or check back later.</p>
         </div>
 
-        <!-- Search Button -->
-        <div class="filter-control-item" id="searchControl">
-            <button class="filter-btn" id="searchBtn" title="Search">
-                <i class="icon-search"></i>
-            </button>
-            <div class="filter-dropdown filter-search-box" id="searchDropdown">
-                <input type="text" id="productSearchInput" class="form-control" placeholder="Search products...">
-                <button id="clearSearchBtn" class="clear-search-btn" style="display: none;">
-                    <i class="icon-close"></i>
-                </button>
-            </div>
-        </div>
     </div>
-</div>
-<!-- end: Category Filter -->
-
-<!-- Products Grid -->
-<div id="productGrid" class="grid-layout portfolio-4-columns" data-margin="20" style="display: none; position: relative; min-height: 400px;">
-    <!-- Products will be loaded here by JavaScript -->
-</div>
-<!-- end: Products Grid -->
-
-<!-- No Products Message -->
-<div id="noProducts" class="text-center" style="display: none; padding: 60px 0;">
-    <i class="fa fa-shopping-bag fa-4x text-muted"></i>
-    <h3 class="m-t-20">No products found</h3>
-    <p class="text-muted">Please try a different category or check back later.</p>
-</div>
+</section>
+<!-- end: SHOP PAGE -->
 {% endblock %}
 
 {% block extra_js %}
@@ -268,8 +265,8 @@
     // State
     let allProducts = [];
     let categories = [];
-    let parentCategorySlug = null; // e.g., 'music', 'md', or null
-    let subcategoryIds = []; // IDs of subcategories (for reference only)
+    let parentCategorySlug = null;
+    let subcategoryIds = [];
 
     // Get URL parameter helper function
     function getUrlParameter(name) {
@@ -286,7 +283,7 @@
         // Update page title based on category
         updatePageTitle();
 
-        // Load categories FIRST, then products (like the POLO demo)
+        // Load categories FIRST, then products
         loadCategories();
     });
 
@@ -302,50 +299,32 @@
     // Load Categories from API
     async function loadCategories() {
         try {
-            // Build API params based on URL parameter
             const apiParams = {};
             if (parentCategorySlug) {
-                // Pass parent_slug to backend to filter subcategories
                 apiParams.parent_slug = parentCategorySlug;
             }
 
             console.log('Loading categories with params:', apiParams);
 
-            // Fetch categories from API (backend filters them)
             const data = await API.categories.getAll(apiParams);
             categories = data.results || data;
 
             console.log('Categories loaded from API:', categories.length, categories);
 
-            // If we have a parent category filter, update UI text
             if (parentCategorySlug && categories.length > 0) {
-                // Store subcategory IDs for reference
                 subcategoryIds = categories.map(cat => cat.id);
-
-                // Get parent category name from first subcategory
                 const parentName = parentCategorySlug.charAt(0).toUpperCase() + parentCategorySlug.slice(1);
-
-                // Update "Show All" button text
                 $('#filterList li:first a').text(`All ${parentName}`);
-                // $('.grid-active-title').text(`All ${parentName}`);
-
                 console.log(`Showing ${categories.length} subcategories of ${parentName}`);
-                console.log('Subcategory IDs:', subcategoryIds);
             }
 
-            // Step 1: Render category filter
             renderCategoryFilter();
-
-            // Step 2: Show filter container (includes category filter + sort/search buttons)
             $('#filterContainer').show();
-
             console.log('Category filter shown, now loading products...');
 
-            // Step 3: Load products AFTER categories are ready
             loadProducts();
         } catch (error) {
             console.error('Error loading categories:', error);
-            // Even if categories fail, still try to load products
             loadProducts();
         }
     }
@@ -353,61 +332,43 @@
     // Load Products from API
     async function loadProducts() {
         try {
-            // Build API params based on URL parameter
             const apiParams = {};
             if (parentCategorySlug) {
-                // Pass parent_category to backend to filter products
                 apiParams.parent_category = parentCategorySlug;
             }
 
             console.log('Loading products with params:', apiParams);
 
-            // Fetch products from API (backend filters them)
             const data = await API.products.getAll(apiParams);
-
-            // Handle paginated response
             allProducts = data.results || data;
 
             console.log('Products loaded from API:', allProducts.length, allProducts);
 
             if (allProducts.length > 0) {
-                // Step 1: Render products to DOM
                 renderProducts();
-
-                // Step 2: Show grid and hide loading
                 $('#productGrid').show();
                 $('#loading').hide();
 
-                // Step 3: Re-initialize Isotope properly
+                // Re-initialize POLO Isotope
                 setTimeout(function() {
-                    console.log('==========================================');
                     console.log('Re-initializing Isotope with products...');
 
                     const $grid = $('#productGrid');
 
-                    // Debug: Check what's in the DOM
-                    console.log('Products in grid:', $('#productGrid .portfolio-item').length);
-                    $('#productGrid .portfolio-item').each(function(i) {
-                        console.log(`Product ${i} classes:`, $(this).attr('class'));
-                    });
-
-                    // Check if Isotope already exists (from POLO's auto-init)
+                    // Destroy existing Isotope instance
                     const existingIsotope = $grid.data('isotope');
                     if (existingIsotope) {
                         console.log('Destroying existing Isotope instance...');
                         $grid.isotope('destroy');
                     }
 
-                    // Wait for images, then initialize fresh Isotope
+                    // Initialize fresh Isotope after images load
                     $grid.imagesLoaded(function() {
                         console.log('Images loaded, initializing fresh Isotope...');
 
-                        // Match POLO's exact Isotope configuration from functions.js
-                        const gridMargin = $grid.attr('data-margin') || 20;
-
                         $grid.isotope({
                             itemSelector: '.portfolio-item',
-                            layoutMode: 'fitRows', // Using fitRows instead of masonry for even grid
+                            layoutMode: 'fitRows',
                             transitionDuration: '0.45s',
                             resize: true,
                             percentPosition: false,
@@ -417,17 +378,11 @@
                         });
 
                         console.log('Isotope initialized successfully');
-                        const isotopeInstance = $grid.data('isotope');
-                        console.log('Isotope items:', isotopeInstance.items.length);
-                        console.log('Filtered items:', isotopeInstance.filteredItems.length);
 
-                        // Set up our filter handlers
                         setTimeout(function() {
                             setupManualFilters();
                             initializeSortAndSearch();
                         }, 100);
-
-                        console.log('==========================================');
                     });
                 }, 300);
             } else {
@@ -444,11 +399,8 @@
     // Render Category Filter
     function renderCategoryFilter() {
         const $filterList = $('#filterList');
-
-        // Clear existing categories (except "All Products")
         $filterList.find('li:not(:first)').remove();
 
-        // Add category filters
         categories.forEach(category => {
             const $li = $('<li>').append(
                 $('<a>')
@@ -460,10 +412,9 @@
         });
 
         console.log('Category filter rendered with', categories.length, 'categories');
-        console.log('Filter buttons in DOM:', $('#filterList a').length);
     }
 
-    // Set up manual filter handlers (as backup if POLO's system doesn't work)
+    // Set up manual filter handlers
     function setupManualFilters() {
         const $grid = $('#productGrid');
         const $filterList = $('#filterList');
@@ -474,39 +425,22 @@
             e.preventDefault();
 
             const filterValue = $(this).attr('data-category');
-            console.log('==========================================');
-            console.log('Manual filter clicked:', $(this).text());
-            console.log('Filter value:', filterValue);
+            console.log('Filter clicked:', $(this).text(), 'value:', filterValue);
 
             // Update active state
             $filterList.find('li').removeClass('active');
             $(this).parent().addClass('active');
 
-            // Update active title
-            // $('.grid-active-title').text($(this).text());
-
-            // Check if Isotope is initialized
+            // Apply Isotope filter
             if ($grid.data('isotope')) {
-                console.log('Isotope found, applying filter...');
-                console.log('Items before filter:', $('#productGrid .portfolio-item').length);
-                console.log('Items matching filter:', $(filterValue).length);
-
                 $grid.isotope({ filter: filterValue });
-
-                setTimeout(function() {
-                    console.log('Visible items after filter:', $('#productGrid .portfolio-item:visible').length);
-                }, 100);
-            } else {
-                console.error('Isotope not initialized on grid!');
             }
-
-            console.log('==========================================');
         });
 
-        console.log('Manual filter handlers attached to', $filterList.find('a').length, 'buttons');
+        console.log('Manual filter handlers attached');
     }
 
-    // Render Products
+    // Render Products (POLO portfolio-item structure)
     function renderProducts() {
         const $grid = $('#productGrid');
         $grid.empty();
@@ -516,17 +450,15 @@
             $grid.append($productCard);
         });
 
-        console.log('Products rendered:', allProducts.length, 'items in grid:', $grid.children().length);
+        console.log('Products rendered:', allProducts.length);
     }
 
-    // Create Product Card HTML
+    // Create Product Card HTML (POLO template structure)
     function createProductCard(product) {
-        // Get category class for filtering (matches POLO's filter system)
         const categoryClass = product.category_id ? `cat-${product.category_id}` : 'cat-uncategorized';
-        // Get product image URL
-        const imageUrl = product.image || '{% static "assets/images/placeholder.jpg" %}';
+        const imageUrl = product.primary_image || '{% static "assets/images/placeholder.jpg" %}';
 
-        // Determine badge
+        // Badges (POLO badge classes)
         let badgeHTML = '';
         if (product.is_new) {
             badgeHTML = '<span class="badge badge-primary">New</span>';
@@ -536,12 +468,11 @@
             badgeHTML = `<span class="badge badge-danger">-${product.discount_percentage}%</span>`;
         }
 
-        // Stock badge
         const stockBadge = product.in_stock
             ? '<span class="badge badge-success m-l-5">In Stock</span>'
             : '<span class="badge badge-secondary m-l-5">Out of Stock</span>';
 
-        // Price display
+        // Price (POLO price format)
         let priceHTML = `<span class="product-price">$${parseFloat(product.price).toFixed(2)}</span>`;
         if (product.is_on_sale && product.original_price) {
             priceHTML = `
@@ -555,7 +486,7 @@
             ? `<span class="text-muted text-uppercase" style="font-size: 12px; letter-spacing: 1px;">${product.artist_name}</span><br>`
             : '';
 
-        // Create portfolio item (using POLO template structure)
+        // Create POLO portfolio item
         const $item = $(`
             <div class="portfolio-item no-overlay img-zoom ${categoryClass}">
                 <div class="portfolio-item-wrap">
@@ -584,77 +515,65 @@
 
     // ===== Sort & Search Functionality =====
 
-    // Current sort and search state
     let currentSort = 'newest';
     let currentSearchTerm = '';
 
     // Setup Sort and Search Controls
     function setupSortAndSearch() {
-        // Sort dropdown functionality
+        // Sort dropdown
         $('#sortBtn').on('click', function(e) {
             e.stopPropagation();
             $('#sortControl').toggleClass('active');
             $('#searchControl').removeClass('active');
         });
 
-        // Sort option click handlers
         $('#sortDropdown a').on('click', function(e) {
             e.preventDefault();
             const sortValue = $(this).data('sort');
 
-            // Update active state
             $('#sortDropdown a').removeClass('active');
             $(this).addClass('active');
 
-            // Apply sort
             currentSort = sortValue;
             applySortAndFilter();
 
-            // Close dropdown
             $('#sortControl').removeClass('active');
-
             console.log('Sort applied:', sortValue);
         });
 
-        // Search button functionality
+        // Search button
         $('#searchBtn').on('click', function(e) {
             e.stopPropagation();
             $('#searchControl').toggleClass('active');
             $('#sortControl').removeClass('active');
 
-            // Focus on input when opening
             if ($('#searchControl').hasClass('active')) {
                 $('#productSearchInput').focus();
             }
         });
 
-        // Search input functionality
+        // Search input
         $('#productSearchInput').on('input', function() {
             currentSearchTerm = $(this).val().toLowerCase();
 
-            // Show/hide clear button
             if (currentSearchTerm) {
                 $('#clearSearchBtn').show();
             } else {
                 $('#clearSearchBtn').hide();
             }
 
-            // Apply filter with debounce
             clearTimeout(window.searchTimeout);
             window.searchTimeout = setTimeout(function() {
                 applySortAndFilter();
             }, 300);
         });
 
-        // Clear search button
+        // Clear search
         $('#clearSearchBtn').on('click', function() {
-            $('#productSearchInput').val('');
-            currentSearchTerm = '';
-            $(this).hide();
-            applySortAndFilter();
+            $('#productSearchInput').val('').trigger('input').focus();
         });
 
-        // Close dropdowns when clicking outside
+        // Close dropdowns on outside click
         $(document).on('click', function(e) {
             if (!$(e.target).closest('.filter-control-item').length) {
                 $('.filter-control-item').removeClass('active');
@@ -667,18 +586,15 @@
     // Apply both sort and search filter
     function applySortAndFilter() {
         const $grid = $('#productGrid');
-
-        // Get all product items
         let $items = $grid.find('.portfolio-item');
 
-        // 1. First apply search filter if there's a search term
+        // Apply search filter
         if (currentSearchTerm) {
             $items.each(function() {
                 const $item = $(this);
                 const title = $item.find('h3').text().toLowerCase();
                 const artist = $item.find('.text-muted').first().text().toLowerCase();
 
-                // Show/hide based on search match
                 if (title.includes(currentSearchTerm) || artist.includes(currentSearchTerm)) {
                     $item.show();
                 } else {
@@ -686,11 +602,10 @@
                 }
             });
         } else {
-            // Show all items if no search
             $items.show();
         }
 
-        // 2. Then apply sort using Isotope
+        // Apply sort with Isotope
         if ($grid.data('isotope')) {
             let sortOptions = {};
 
@@ -749,10 +664,8 @@
                     break;
             }
 
-            // Apply sort with Isotope
             $grid.isotope(sortOptions);
 
-            // Force layout update
             setTimeout(function() {
                 $grid.isotope('layout');
             }, 100);
@@ -762,15 +675,9 @@
     }
 
     // Initialize sort and search when Isotope is ready
-    // This is called after Isotope initialization in loadProducts()
     function initializeSortAndSearch() {
         setupSortAndSearch();
-
-        // Set default sort option as active
         $('#sortDropdown a[data-sort="newest"]').addClass('active');
     }
-
-    // Note: Isotope initialization is handled by POLO's gridLayout() function
-    // We trigger it manually after products are loaded (see loadProducts function)
 </script>
 {% endblock %}

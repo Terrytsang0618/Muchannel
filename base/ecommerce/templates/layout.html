@@ -17,6 +17,7 @@
 
     <!-- Custom Styles (override POLO template) -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mobile-bottom-nav.css' %}" rel="stylesheet">
 
     <!-- Tailwind CSS CDN (optional - can be used alongside POLO template) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -38,19 +39,21 @@
         <!-- Include Artists Sidebar (Desktop Only) -->
         {% include 'includes/sidebar.html' %}
 
-        <!-- Page Content -->
-        <section id="page-content">
-            <div class="container">
-            {% block content %}
-            {% endblock %}
-            </div>
-        </section>
+        <!-- Page Content - Each page defines its own section/container structure -->
+        {% block content %}
+        {% endblock %}
         <!-- end: Page Content -->
     </div>
     <!-- end: Body Inner -->
 
     <!-- Scroll top -->
     <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
+
+    <!-- Include Mobile Bottom Tab Bar -->
+    {% include 'includes/mobile_bottom_nav.html' %}
+
+    <!-- Include Login Modal -->
+    {% include 'includes/login_modal.html' %}
 
     <!-- POLO Template Scripts (from assets) -->
     <script src="{% static 'assets/js/jquery.js' %}"></script>
@@ -60,7 +63,9 @@
     <!-- Custom JavaScript -->
     <script src="{% static 'js/api.js' %}"></script>
     <script src="{% static 'js/auth.js' %}"></script>
+    <script src="{% static 'js/auth-ui.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/mobile-bottom-nav.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

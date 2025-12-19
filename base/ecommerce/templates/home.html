@@ -1,98 +1,103 @@
 {% extends 'layout.html' %}
 
-{% block title %}Home - K-pop Store{% endblock %}
+{% block title %}Home - Atmostars{% endblock %}
 
 {% block content %}
+<!-- HOME PAGE -->
+<section id="page-content" class="p-t-80 p-b-80">
+    <div class="container">
+        <div class="space-y-6">
+            <!-- Welcome Banner -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg shadow-lg p-8 text-white">
+                <h1 class="text-4xl font-bold mb-2">Welcome to K-pop Store</h1>
+                <p class="text-lg opacity-90">Your one-stop shop for K-pop albums and official merchandise</p>
+                <button class="mt-4 bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                    Shop Now
+                </button>
+            </div>
 
-<div class="space-y-6">
-    <!-- Welcome Banner -->
-    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg shadow-lg p-8 text-white">
-        <h1 class="text-4xl font-bold mb-2">Welcome to K-pop Store</h1>
-        <p class="text-lg opacity-90">Your one-stop shop for K-pop albums and official merchandise</p>
-        <button class="mt-4 bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-            Shop Now
-        </button>
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">Total Albums</p>
+                            <p id="albums-count" class="text-2xl font-bold text-gray-800">0</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-compact-disc text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">K-pop Artists</p>
+                            <p id="artists-count" class="text-2xl font-bold text-gray-800">0</p>
+                        </div>
+                        <div class="bg-pink-100 p-3 rounded-full">
+                            <i class="fas fa-star text-pink-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">Happy Customers</p>
+                            <p class="text-2xl font-bold text-gray-800">8,901</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm">New This Week</p>
+                            <p class="text-2xl font-bold text-gray-800">45</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-fire text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Albums Section -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Featured Albums</h2>
+                    <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
+                </div>
+
+                <!-- Dynamic Product Grid - Will be populated by JavaScript -->
+                <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="flex justify-center items-center py-12 col-span-full">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Artists Section -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Popular Artists</h2>
+                    <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
+                </div>
+
+                <!-- Dynamic Artists Grid - Will be populated by JavaScript -->
+                <div id="popular-artists" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex justify-center items-center py-12 col-span-full">
+                        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Total Albums</p>
-                    <p id="albums-count" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-purple-100 p-3 rounded-full">
-                    <i class="fas fa-compact-disc text-purple-600 text-xl"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">K-pop Artists</p>
-                    <p id="artists-count" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-pink-100 p-3 rounded-full">
-                    <i class="fas fa-star text-pink-600 text-xl"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">Happy Customers</p>
-                    <p class="text-2xl font-bold text-gray-800">8,901</p>
-                </div>
-                <div class="bg-blue-100 p-3 rounded-full">
-                    <i class="fas fa-users text-blue-600 text-xl"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm">New This Week</p>
-                    <p class="text-2xl font-bold text-gray-800">45</p>
-                </div>
-                <div class="bg-green-100 p-3 rounded-full">
-                    <i class="fas fa-fire text-green-600 text-xl"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Featured Albums Section -->
-    <div>
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold text-gray-800">Featured Albums</h2>
-            <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
-        </div>
-
-        <!-- Dynamic Product Grid - Will be populated by JavaScript -->
-        <div id="featured-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div class="flex justify-center items-center py-12 col-span-full">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Popular Artists Section -->
-    <div>
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-2xl font-bold text-gray-800">Popular Artists</h2>
-            <a href="#" class="text-purple-600 hover:text-purple-800 font-semibold">View All →</a>
-        </div>
-
-        <!-- Dynamic Artists Grid - Will be populated by JavaScript -->
-        <div id="popular-artists" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="flex justify-center items-center py-12 col-span-full">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
+<!-- end: HOME PAGE -->
 {% endblock %}

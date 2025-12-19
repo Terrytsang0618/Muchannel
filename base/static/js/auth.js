@@ -8,26 +8,36 @@ class AuthManager {
     }
 
     async init() {
+        console.log('🔐 [AUTH] Initializing authentication system...');
         // Check if user is already authenticated
         await this.checkAuth();
         this.setupEventListeners();
     }
 
     async checkAuth() {
+        console.log('🔍 [AUTH] Checking authentication status...');
         try {
             this.currentUser = await API.auth.getCurrentUser();
+            console.log('✅ [AUTH] User is LOGGED IN:', {
+                username: this.currentUser.username,
+                email: this.currentUser.email,
+                id: this.currentUser.id
+            });
             this.updateUI(true);
         } catch (error) {
+            console.log('❌ [AUTH] User is NOT logged in (anonymous)');
             this.currentUser = null;
             this.updateUI(false);
         }
     }
 
     updateUI(isAuthenticated) {
+        console.log(`🎨 [AUTH] Updating UI - isAuthenticated: ${isAuthenticated}`);
         const userMenuEl = document.getElementById('user-menu');
         const authButtonsEl = document.getElementById('auth-buttons');
 
         if (isAuthenticated && this.currentUser) {
+            console.log('👤 [AUTH] Displaying user menu for:', this.currentUser.username);
             // Show user menu, hide auth buttons
             if (userMenuEl) {
                 userMenuEl.innerHTML = `
@@ -57,6 +67,7 @@ class AuthManager {
                 authButtonsEl.classList.add('hidden');
             }
         } else {
+            console.log('🔓 [AUTH] Displaying login/register buttons (user not authenticated)');
             // Show auth buttons, hide user menu
             if (userMenuEl) {
                 userMenuEl.innerHTML = '';
@@ -71,6 +82,7 @@ class AuthManager {
     setupEventListeners() {
         // Listen for session expired event
         window.addEventListener('auth:session-expired', () => {
+            console.warn('⏰ [AUTH] Session expired! Refresh token is no longer valid.');
             this.showLoginModal('Your session has expired. Please log in again.');
         });
 
@@ -111,9 +123,16 @@ class AuthManager {
     }
 
     async handleLogin(username, password) {
+        console.log(`🔑 [AUTH] Attempting login for user: ${username}`);
         try {
             const data = await API.auth.login(username, password);
             this.currentUser = data.user;
+            console.log('✅ [AUTH] Login successful!', {
+                username: data.user.username,
+                email: data.user.email,
+                id: data.user.id
+            });
+            console.log('🍪 [AUTH] JWT tokens set in cookies (access_token + refresh_token)');
             this.updateUI(true);
             this.closeModal();
             showNotification('Login successful!', 'success');
@@ -123,15 +142,23 @@ class AuthManager {
                 await updateCartCount();
             }
         } catch (error) {
+            console.error('❌ [AUTH] Login failed:', error.response?.data || error.message);
             const message = error.response?.data?.error || 'Login failed. Please try again.';
             showNotification(message, 'error');
         }
     }
 
     async handleRegister(userData) {
+        console.log(`📝 [AUTH] Attempting registration for user: ${userData.username}`);
         try {
             const data = await API.auth.register(userData);
             this.currentUser = data.user;
+            console.log('✅ [AUTH] Registration successful!', {
+                username: data.user.username,
+                email: data.user.email,
+                id: data.user.id
+            });
+            console.log('🍪 [AUTH] JWT tokens set in cookies (access_token + refresh_token)');
             this.updateUI(true);
             this.closeModal();
             showNotification('Registration successful! Welcome to K-pop Store!', 'success');
@@ -141,6 +168,7 @@ class AuthManager {
                 await updateCartCount();
             }
         } catch (error) {
+            console.error('❌ [AUTH] Registration failed:', error.response?.data || error.message);
             const errors = error.response?.data;
             let message = 'Registration failed. Please try again.';
 
@@ -155,9 +183,12 @@ class AuthManager {
     }
 
     async handleLogout() {
+        console.log('🚪 [AUTH] Attempting logout...');
         try {
             await API.auth.logout();
             this.currentUser = null;
+            console.log('✅ [AUTH] Logout successful - JWT tokens cleared from cookies');
+            console.log('❌ [AUTH] User is now logged out (anonymous)');
             this.updateUI(false);
             showNotification('Logged out successfully', 'success');
 
@@ -166,6 +197,7 @@ class AuthManager {
                 await updateCartCount();
             }
         } catch (error) {
+            console.error('❌ [AUTH] Logout failed:', error);
             showNotification('Logout failed', 'error');
         }
     }
@@ -283,10 +315,13 @@ class AuthManager {
     }
 
     isAuthenticated() {
-        return this.currentUser !== null;
+        const authenticated = this.currentUser !== null;
+        console.log(`🔍 [AUTH] isAuthenticated() called - Result: ${authenticated}`);
+        return authenticated;
     }
 
     getUser() {
+        console.log('👤 [AUTH] getUser() called - Current user:', this.currentUser || 'null (anonymous)');
         return this.currentUser;
     }
 }
@@ -294,5 +329,6 @@ class AuthManager {
 // Initialize auth manager when DOM is ready
 let authManager;
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 [AUTH] DOM loaded - Starting AuthManager...');
     authManager = new AuthManager();
 });

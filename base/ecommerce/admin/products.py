@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django import forms
-from ecommerce.models import Category, Product, Artist, Review
+from ecommerce.models import Category, Product, ProductImage, Artist, Review
 
 
 @admin.register(Category)
@@ -61,12 +61,34 @@ class ArtistAdmin(admin.ModelAdmin):
     profile_thumbnail.short_description = 'Profile'
 
 
+class ProductImageInline(admin.TabularInline):
+    """Inline admin for Product Images - allows adding multiple images on product edit page"""
+    model = ProductImage
+    extra = 1  # Show 1 empty form by default
+    fields = ['image_preview', 'image', 'alt_text', 'display_order', 'is_primary']
+    readonly_fields = ['image_preview']
+    ordering = ['display_order']
+
+    def image_preview(self, obj):
+        """Show image preview in the inline"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="80" height="80" style="object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No Image"
+    image_preview.short_description = 'Preview'
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': ('css/ckeditor5-custom.css',)
         }
+
+    inlines = [ProductImageInline]  # Add inline image editor
+
     list_display = ['image_thumbnail', 'title', 'artist', 'product_type', 'category', 'price', 'original_price', 'stock', 'is_pre_order', 'is_featured', 'is_active', 'created_at']
     list_filter = ['product_type', 'is_featured', 'is_trending', 'is_new', 'is_pre_order', 'is_active', 'category', 'artist']
     search_fields = ['title', 'description', 'item_code', 'artist__name']
@@ -82,7 +104,8 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('original_price', 'price')
         }),
         ('Product Details', {
-            'fields': ('image', 'stock', 'artist', 'release_date', 'label', 'version')
+            'fields': ('stock', 'artist', 'release_date', 'label', 'version'),
+            'description': 'Note: Use the "Product Images" section below to add multiple images. Mark one as primary for thumbnails.'
         }),
         ('Status Flags', {
             'fields': ('is_featured', 'is_trending', 'is_new', 'is_active')
@@ -102,8 +125,15 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
     def image_thumbnail(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.image.url)
+        """Show primary image from gallery"""
+        # Get primary image from gallery
+        primary_image = obj.images.filter(is_primary=True).first()
+        if primary_image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', primary_image.image.url)
+        # If no primary, show first image
+        first_image = obj.images.first()
+        if first_image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', first_image.image.url)
         return "No Image"
     image_thumbnail.short_description = 'Image'
 
