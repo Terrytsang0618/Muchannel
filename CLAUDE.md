@@ -15,6 +15,16 @@
 
 ---
 
+## 🤖 AI Assistant Guidelines
+
+**IMPORTANT**: When working on this project:
+- **DO NOT** create `.md` documentation files unless explicitly requested by the user
+- Focus on code implementation and functionality
+- Provide explanations directly in responses rather than creating documentation files
+- Only create markdown files when the user specifically asks for documentation
+
+---
+
 ## Project Structure
 
 ```

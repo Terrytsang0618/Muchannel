@@ -37,3 +37,16 @@ class ProductDetailView(TemplateView):
         context['page_title'] = 'Product Detail'
         context['product_slug'] = kwargs.get('slug', '')
         return context
+
+
+class CartView(TemplateView):
+    """
+    Shopping cart page - displays user's cart items with management options
+    Requires authentication to view and manage cart items
+    """
+    template_name = 'cart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Shopping Cart'
+        return context

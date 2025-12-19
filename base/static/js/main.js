@@ -59,12 +59,34 @@ function showLoading(elementId) {
 async function updateCartCount() {
     try {
         const cartData = await API.cart.getTotal();
+        const totalItems = cartData.items_count || 0;
+
+        // Update desktop cart badge
         const cartCount = document.getElementById('cart-count');
         if (cartCount) {
-            cartCount.textContent = cartData.items_count || 0;
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'inline-block' : 'none';
         }
+
+        // Update mobile cart badge
+        const mobileCartCount = document.getElementById('mobile-cart-count');
+        if (mobileCartCount) {
+            mobileCartCount.textContent = totalItems;
+            mobileCartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+
+        console.log('🔄 Cart count updated:', totalItems);
     } catch (error) {
-        console.error('Error updating cart count:', error);
+        // If user is not authenticated (401), silently hide badges
+        if (error.response && error.response.status === 401) {
+            const cartCount = document.getElementById('cart-count');
+            const mobileCartCount = document.getElementById('mobile-cart-count');
+            if (cartCount) cartCount.style.display = 'none';
+            if (mobileCartCount) mobileCartCount.style.display = 'none';
+            console.log('🔒 User not authenticated, cart badge hidden');
+        } else {
+            console.error('❌ Error updating cart count:', error);
+        }
     }
 }
 

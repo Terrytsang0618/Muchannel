@@ -179,6 +179,7 @@
     console.log('Product slug:', productSlug);
 
     let productData = null;
+    let cartStatus = { in_cart: false, quantity: 0 };
 
     // Load product on page load
     $(document).ready(function() {
@@ -199,6 +200,9 @@
 
             // Load reviews
             loadProductReviews();
+
+            // Check if product is in cart
+            await checkCartStatus();
 
             // Hide loading, show product
             $('#loadingState').hide();
@@ -543,6 +547,37 @@
         });
     }
 
+    // Check if product is already in cart
+    async function checkCartStatus() {
+        try {
+            const response = await API.cart.checkProduct(productData.id);
+            cartStatus = response;
+
+            // Update button text based on cart status
+            updateAddToCartButton();
+        } catch (error) {
+            // If 401 (not authenticated), user is not logged in
+            if (error.response && error.response.status === 401) {
+                console.log('User not authenticated, cart check skipped');
+                cartStatus = { in_cart: false, quantity: 0 };
+            } else {
+                console.error('Error checking cart status:', error);
+            }
+        }
+    }
+
+    // Update Add to Cart button text
+    function updateAddToCartButton() {
+        const $btn = $('#addToCartBtn');
+        if (cartStatus.in_cart) {
+            $btn.html(`<i class="icon-shopping-cart"></i> Update Cart (${cartStatus.quantity} in cart)`);
+            $btn.removeClass('btn-primary').addClass('btn-warning');
+        } else {
+            $btn.html('<i class="icon-shopping-cart"></i> Add to cart');
+            $btn.removeClass('btn-warning').addClass('btn-primary');
+        }
+    }
+
     // Setup Add to Cart
     function setupAddToCart() {
         $('#addToCartBtn').on('click', async function() {
@@ -557,16 +592,25 @@
 
             // Disable button
             $btn.prop('disabled', true);
-            $btn.html('<i class="fa fa-spinner fa-spin"></i> Adding...');
+            const actionText = cartStatus.in_cart ? 'Updating' : 'Adding';
+            $btn.html(`<i class="fa fa-spinner fa-spin"></i> ${actionText}...`);
 
             try {
                 await API.cart.add(productData.id, quantity);
 
-                // Success feedback
-                $btn.html('<i class="fa fa-check"></i> Added!');
-                $btn.removeClass('btn-primary').addClass('btn-success');
+                // Update cart status
+                const oldQuantity = cartStatus.quantity;
+                cartStatus.in_cart = true;
+                cartStatus.quantity = oldQuantity + quantity;
 
-                // Update cart count in header (if you have one)
+                // Success feedback
+                const successText = oldQuantity > 0
+                    ? `Updated! (${oldQuantity} + ${quantity} = ${cartStatus.quantity})`
+                    : 'Added!';
+                $btn.html(`<i class="fa fa-check"></i> ${successText}`);
+                $btn.removeClass('btn-primary btn-warning').addClass('btn-success');
+
+                // Update cart count in header
                 if (typeof updateCartCount === 'function') {
                     updateCartCount();
                 }
@@ -574,8 +618,7 @@
                 // Reset button after 2 seconds
                 setTimeout(function() {
                     $btn.prop('disabled', false);
-                    $btn.html('<i class="icon-shopping-cart"></i> Add to cart');
-                    $btn.removeClass('btn-success').addClass('btn-primary');
+                    updateAddToCartButton();
                 }, 2000);
 
             } catch (error) {
@@ -594,7 +637,7 @@
 
                 // Reset button
                 $btn.prop('disabled', false);
-                $btn.html('<i class="icon-shopping-cart"></i> Add to cart');
+                updateAddToCartButton();
             }
         });
     }

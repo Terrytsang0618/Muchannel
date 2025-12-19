@@ -1,0 +1,259 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart - K-pop Store{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Shopping cart specific styles */
+    #shop-cart {
+        padding: 60px 0;
+    }
+
+    .shop-cart .table {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .cart-product-thumbnail img {
+        max-width: 80px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .cart-product-thumbnail-name {
+        font-size: 12px;
+        margin-top: 5px;
+        color: #666;
+    }
+
+    .cart-product-remove a {
+        color: #dc3545;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .cart-product-remove a:hover {
+        color: #c82333;
+    }
+
+    .quantity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quantity input[type="button"] {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ddd;
+        background: #f8f9fa;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 4px;
+    }
+
+    .quantity input[type="button"]:hover {
+        background: #e9ecef;
+    }
+
+    .quantity .qty {
+        width: 60px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .cart-total-summary {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        position: sticky;
+        top: 100px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Mobile responsive - remove sticky on small screens */
+    @media (max-width: 991px) {
+        .cart-total-summary {
+            position: relative;
+            top: auto;
+            margin-top: 30px;
+        }
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-cart i {
+        font-size: 80px;
+        color: #ddd;
+        margin-bottom: 20px;
+    }
+
+    .loading-spinner {
+        text-align: center;
+        padding: 60px;
+    }
+
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page title -->
+<section id="page-title" class="text-dark background-grey">
+    <div class="container">
+    <!-- Page Header (POLO template heading) -->
+        <div class="heading-text heading-section">
+            <h2>Shopping Cart</h2>
+            <p class="lead">Review your items</p>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+
+<!-- SHOP CART -->
+<section id="shop-cart">
+    <div class="container">
+        <!-- Loading State -->
+        <div id="cart-loading" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Loading your cart...</p>
+        </div>
+
+        <!-- Empty Cart State -->
+        <div id="empty-cart" style="display: none;">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Your cart is empty</h3>
+                <p class="text-muted">Browse our products and add items to your cart</p>
+            </div>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cart-content" class="shop-cart" style="display: none;">
+            <div class="row">
+                <!-- <div class="col-lg-6">
+                    <button type="button" class="btn btn-outline-danger" onclick="clearCart()">
+                        <i class="fas fa-trash me-2"></i>Clear Cart
+                    </button>
+                </div> -->
+                <!-- Left Column: Cart Items (70%) -->
+                <div class="col-lg-8">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="cart-product-remove" style="width: 50px;"></th>
+                                    <th class="cart-product-thumbnail" style="width: 120px;">Product</th>
+                                    <th class="cart-product-name">Description</th>
+                                    <th class="cart-product-price">Unit Price</th>
+                                    <th class="cart-product-quantity">Quantity</th>
+                                    <th class="cart-product-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-items">
+                                <!-- Cart items will be loaded here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Cart Actions -->
+                    <div class="row mt-4">
+                        <!-- <div class="col-lg-6">
+                            <a href="{% url 'products_list' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                            </a>
+                        </div> -->
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Cart Summary (30%) -->
+                <div class="col-lg-4">
+                    <div class="cart-total-summary">
+                        <h4 class="mb-4">Cart Summary</h4>
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Subtotal:</strong></td>
+                                    <td class="text-end" id="cart-subtotal">$0.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Shipping:</strong></td>
+                                    <td class="text-end text-success">Free Shipping</td>
+                                </tr>
+                                <tr class="border-top">
+                                    <td><strong>Total:</strong></td>
+                                    <td class="text-end">
+                                        <h4 class="text-primary mb-0" id="cart-total">$0.00</h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary w-100 mt-3" onclick="proceedToCheckout()">
+                            <i class="fas fa-lock me-2"></i>Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: SHOP CART -->
+
+<!-- DELIVERY INFO -->
+<section class="background-grey p-t-40 p-b-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Free shipping on orders $60+</h3>
+                    <p>Order more than $60 and get free shipping worldwide.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Worldwide delivery</h3>
+                    <p>We deliver K-pop products to fans all around the world.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="icon-box effect small clean">
+                    <div class="icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure payment</h3>
+                    <p>100% secure payment with trusted payment providers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: DELIVERY INFO -->
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cart.js' %}"></script>
+<script>
+    // Initialize cart on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadCart();
+    });
+</script>
+{% endblock %}

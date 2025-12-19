@@ -157,6 +157,11 @@ const API = {
             return response.data;
         },
 
+        checkProduct: async (productId) => {
+            const response = await axios.get(`${API_BASE_URL}/cart/check/${productId}/`);
+            return response.data;
+        },
+
         clear: async () => {
             const response = await axios.delete(`${API_BASE_URL}/cart/clear/`);
             return response.data;
